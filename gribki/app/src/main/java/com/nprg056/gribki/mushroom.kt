@@ -1,5 +1,8 @@
-import androidx.room.vo.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+
+@Entity
 data class Mushroom(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
