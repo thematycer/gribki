@@ -20,12 +20,15 @@ interface MushroomDao {
     suspend fun delete(mushroom: Mushroom)
 
     @Query("SELECT * from mushroom ORDER BY name ASC")
-    suspend fun getMushroomByName(): Flow<List<Mushroom>>?
+    fun getMushroomByName(): Flow<List<Mushroom>>?
 
     @Query("SELECT * from Mushroom WHERE id = :id")
-    suspend fun getMushroomByID(id: Int): Flow<Mushroom?>
+    fun getMushroomByID(id: Int): Flow<Mushroom?>
 
     @Query("SELECT * FROM Mushroom WHERE usage = :usageType ORDER BY name ASC")
-    suspend fun getMushroomsByUsage(usageType: UsageType): Flow<List<Mushroom>>
+    fun getMushroomsByUsage(usageType: UsageType): Flow<List<Mushroom>>
+
+    @Query("SELECT * FROM Mushroom")
+    fun getAllMushrooms(): Flow<List<Mushroom>>
 
 }
