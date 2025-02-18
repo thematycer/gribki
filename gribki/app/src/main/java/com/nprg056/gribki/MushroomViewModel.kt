@@ -11,6 +11,7 @@ class MushroomViewModel(
 ):ViewModel() {
     private val _sortType = MutableStateFlow(SortType.NAME)
     private val _usageType = MutableStateFlow(UsageType.jedla)
+    private val _currentId = MutableStateFlow(0);
     private val _state = MutableStateFlow(MushroomState())
     private val _mushrooms = _sortType
         .flatMapLatest { sortType ->
@@ -19,7 +20,10 @@ class MushroomViewModel(
                     dao.getMushroomByName()
                 }
                 SortType.USAGE_TYPE -> {
-                    dao.getMushroomsByUsage(_usageType)
+                    dao.getMushroomsByUsage(_usageType.value)
+                }
+                SortType.ONE -> {
+                    dao.getMushroomById(_currentId.value)
                 }
             }
         }
