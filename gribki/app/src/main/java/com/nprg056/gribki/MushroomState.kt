@@ -1,7 +1,7 @@
 package com.nprg056.gribki
 
 import Mushroom
-import UsageType
+import com.nprg056.gribki.UsageType
 
 data class MushroomState(
     val mushrooms: List<Mushroom> = emptyList(),
@@ -10,6 +10,6 @@ data class MushroomState(
     val loc: String ="",
     val usage: UsageType = UsageType.jedla,
     val image: Int = 0,
-    val sortType: SortType = sortType.NAME
+    val sortType: SortType = SortType.NAME
 
 )

@@ -2,7 +2,7 @@ package com.nprg056.gribki
 
 
 import Mushroom
-import UsageType
+import com.nprg056.gribki.UsageType
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
@@ -10,8 +10,11 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
+
 @Dao
 interface MushroomDao {
+
+
 
     @Upsert
     suspend fun insert(mushroom: Mushroom)
@@ -19,16 +22,11 @@ interface MushroomDao {
     @Delete
     suspend fun delete(mushroom: Mushroom)
 
-    @Query("SELECT * from mushroom ORDER BY name ASC")
-    fun getMushroomByName(): Flow<List<Mushroom>>?
+    @Query("SELECT * FROM mushroom ORDER BY name ASC")
+    fun getMushroomByName(): Flow<List<Mushroom>>
 
-    @Query("SELECT * from Mushroom WHERE id = :id")
-    fun getMushroomByID(id: Int): Flow<Mushroom?>
+    @Query("SELECT * FROM mushroom WHERE usage = :usage ORDER BY name ASC")
+    fun getMushroomsByUsage(usage: UsageType): Flow<List<Mushroom>>
 
-    @Query("SELECT * FROM Mushroom WHERE usage = :usageType ORDER BY name ASC")
-    fun getMushroomsByUsage(usageType: UsageType): Flow<List<Mushroom>>
-
-    @Query("SELECT * FROM Mushroom")
-    fun getAllMushrooms(): Flow<List<Mushroom>>
 
 }
