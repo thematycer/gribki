@@ -10,7 +10,7 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
-
+//here you write sql queries
 @Dao
 interface MushroomDao {
 
@@ -29,5 +29,5 @@ interface MushroomDao {
 
     //can add to select by name if needed
     @Query("SELECT * FROM mushroom WHERE id = :id")
-    fun getMushroomById(id: Int): Flow<Mushroom>
+    fun getMushroomById(id: Int):  Flow<List<Mushroom>>
 }

@@ -16,7 +16,11 @@ class MushroomViewModel(
     private val dao: MushroomDao
 ):ViewModel() {
     private val _sortType = MutableStateFlow(SortType.NAME)
-    //pri zmene event.sortype se zavola
+    private val _state = MutableStateFlow(MushroomState())
+    private val _usageType = MutableStateFlow(UsageType.jedla)
+    private val _currentId = MutableStateFlow(0);
+
+    //actual list of mushrooms according to type/name searched
     private val _mushrooms = _sortType
         .flatMapLatest { sortType ->
             when (sortType) {
@@ -26,33 +30,28 @@ class MushroomViewModel(
                 SortType.USAGE_TYPE -> {
                     dao.getMushroomsByUsage(_usageType.value)
                 }
+                SortType.ONE->{
+                    dao.getMushroomById(_currentId.value)
+                }
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
-    private val _state = MutableStateFlow(MushroomState())
-    private val _usageType = MutableStateFlow(UsageType.jedla)
-    private val _currentId = MutableStateFlow(0);
-    private val _currentMushroom = _currentId
-        .flatMapLatest { id ->
-            dao.getMushroomById(id)
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    //pri zmene se abdejtuj
-    val state = combine(_state, _sortType, _mushrooms, _usageType, _currentId){state, sortType, mushrooms, usageType, currentId->
+
+    //if any of the variables changes change state
+    val state = combine(_state, _sortType, _mushrooms, _usageType, _currentId){state, sortType, mushrooms, usageType, currentId ->
         state.copy(
             mushrooms = mushrooms,
             sortType = sortType,
             usage = usageType,
-            mushroomId = currentId
+            mushroomId = currentId,
         )
-
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MushroomState())
 
 
 
 
 
-
+    //on user event
     fun  onEvent(event: MushroomEvent){
         when(event){
             is MushroomEvent.SortMushroom->{
@@ -61,7 +60,6 @@ class MushroomViewModel(
             is MushroomEvent.GetOneMushroom->{
                 _currentId.value = event.id
             }
-
         }
     }
 }
