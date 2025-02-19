@@ -30,14 +30,14 @@ class MushroomViewModel(
                 SortType.USAGE_TYPE -> {
                     dao.getMushroomsByUsage(_usageType.value)
                 }
-                SortType.ONE->{
+                SortType.ONE_BY_ID->{
                     dao.getMushroomById(_currentId.value)
                 }
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
 
-    //if any of the variables changes change state
+    //if any of the variables changes-> change state in mushroomState
     val state = combine(_state, _sortType, _mushrooms, _usageType, _currentId){state, sortType, mushrooms, usageType, currentId ->
         state.copy(
             mushrooms = mushrooms,
@@ -51,7 +51,7 @@ class MushroomViewModel(
 
 
 
-    //on user event
+    //on user event->call something from mushroomEvent
     fun  onEvent(event: MushroomEvent){
         when(event){
             is MushroomEvent.SortMushroom->{
@@ -59,6 +59,7 @@ class MushroomViewModel(
             }
             is MushroomEvent.GetOneMushroom->{
                 _currentId.value = event.id
+                _sortType.value = SortType.ONE_BY_ID
             }
         }
     }

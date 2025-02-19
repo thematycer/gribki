@@ -5,7 +5,7 @@ sealed interface MushroomEvent {
     //get list of mushrooms
     data class SortMushroom(val sortType: SortType):MushroomEvent
 
-    //get single mushroom
+    //get single mushroom in a list
     data class GetOneMushroom(val id: Int):MushroomEvent
 
 }

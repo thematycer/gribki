@@ -11,6 +11,7 @@ import androidx.room.RoomDatabase
     //version will be kept 1, since I am not sure how to do migration
     version = 1
 )
+
 abstract class MushroomDatabase : RoomDatabase() {
     abstract fun MushroomDao(): MushroomDao
 }
