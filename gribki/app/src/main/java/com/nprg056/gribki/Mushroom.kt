@@ -12,6 +12,6 @@ data class Mushroom(
     val desc: String,
     val loc: String,
     val usage: UsageType,
-    val image: Int
+    val imageID: Int
 
 )
