@@ -29,5 +29,5 @@ interface MushroomDao {
 
 
     @Query("SELECT * FROM mushroom WHERE id = :id")
-    suspend fun getMushroomById(id: Int): Flow<List<Mushroom>>
+    suspend fun getMushroomById(id: Int): Flow<Mushroom>
 }
