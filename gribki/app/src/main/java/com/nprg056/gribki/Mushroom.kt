@@ -1,3 +1,4 @@
+package com.nprg056.gribki
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.nprg056.gribki.UsageType

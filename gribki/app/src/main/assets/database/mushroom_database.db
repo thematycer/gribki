@@ -1,6 +1,6 @@
 INSERT INTO mushroom (name, desc, loc, usage, image) VALUES
-('Muchomůrka červená', 'Jedovatá, ale psychoaktivní', 'Lesy', 'jedovata', 0),
+('Muchomůrka červená', 'Jedovatá, ale psychoaktivní', 'Lesy', 'jedovata', 1),
 ('Hřib smrkový', 'Výborný jedlý hřib', 'Jehličnaté lesy', 'jedla', 1),
-('Pýchavka obrovská', 'Jedlá, když je mladá', 'Louky', 'jedla', 2),
-('Muchomůrka tygrovaná', 'Silně jedovatá houba', 'Lesy', 'jedovata', 3),
-('Ryzec syrovinka', 'Velmi chutná houba', 'Smíšené lesy', 'jedla', 4);
+('Pýchavka obrovská', 'Jedlá, když je mladá', 'Louky', 'jedla', 1),
+('Muchomůrka tygrovaná', 'Silně jedovatá houba', 'Lesy', 'jedovata', 1),
+('Ryzec syrovinka', 'Velmi chutná houba', 'Smíšené lesy', 'jedla', 1);
