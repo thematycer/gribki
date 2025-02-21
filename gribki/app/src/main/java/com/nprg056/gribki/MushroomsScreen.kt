@@ -64,10 +64,10 @@ fun MushroomScreen(
                         Text(
                             text = "${mushroom.name}"
                         )
-                        Image(
-                            painter = painterResource(id = mushroom.imageID),
-                            contentDescription = "Mushroom Image"
-                        )
+                        //Image(
+                        //    painter = painterResource(id = mushroom.imageID),
+                        //    contentDescription = "Mushroom Image"
+                        //)
                     }
 
                 }
