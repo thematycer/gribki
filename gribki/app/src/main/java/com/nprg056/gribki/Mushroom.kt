@@ -16,6 +16,7 @@ data class Mushroom(
     //type of mushroom usage
     val usage: UsageType,
     //id of the mushroom image
-    val imageID: Int
-
+    val imageID: Int,
+    //list tagu pro houby
+    //val tags: List<String>
 )
