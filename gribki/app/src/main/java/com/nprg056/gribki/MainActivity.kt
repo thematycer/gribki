@@ -13,6 +13,7 @@ import androidx.room.Room
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
 
 
 class MainActivity : ComponentActivity() {
@@ -33,32 +34,35 @@ class MainActivity : ComponentActivity() {
     }
 
     private suspend fun populateDatabase() {
-        val mushrooms = listOf(
-            Mushroom(
-                name = "Hřib smrkový",
-                desc = "Jedlá houba s hnědým kloboukem",
-                loc = "V smrkových lesích",
-                usage = UsageType.Jedla,
-                imageID = 1 // TODO
-            ),
-            Mushroom(
-                name = "Muchomůrka červená",
-                desc = "Jedovatá houba s červeným kloboukem",
-                loc = "Listnaté a smíšené lesy",
-                usage = UsageType.Jedovata,
-                imageID = 2
-            ),
-            Mushroom(
-                name = "Bedla vysoká",
-                desc = "Chutná jedlá houba",
-                loc = "Louky a pastviny",
-                usage = UsageType.Jedla,
-                imageID = 3
+        val existingMushrooms = db.MushroomDao().searchMushroomsByName("").first()
+        if (existingMushrooms.isEmpty()) {
+            val mushrooms = listOf(
+                Mushroom(
+                    name = "Hřib smrkový",
+                    desc = "Jedlá houba s hnědým kloboukem",
+                    loc = "V smrkových lesích",
+                    usage = UsageType.Jedla,
+                    imageID = 1 // TODO
+                ),
+                Mushroom(
+                    name = "Muchomůrka červená",
+                    desc = "Jedovatá houba s červeným kloboukem",
+                    loc = "Listnaté a smíšené lesy",
+                    usage = UsageType.Jedovata,
+                    imageID = 2
+                ),
+                Mushroom(
+                    name = "Bedla vysoká",
+                    desc = "Chutná jedlá houba",
+                    loc = "Louky a pastviny",
+                    usage = UsageType.Jedla,
+                    imageID = 3
+                )
             )
-        )
 
-        mushrooms.forEach { mushroom ->
-            db.MushroomDao().insert(mushroom)
+            mushrooms.forEach { mushroom ->
+                db.MushroomDao().insert(mushroom)
+            }
         }
     }
 
