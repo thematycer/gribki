@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MushroomDao {
 
-    //@Upsert
-    //suspend fun insert(mushroom: Mushroom)
+    @Upsert
+    suspend fun insert(mushroom: Mushroom)
 
     //@Delete
     //suspend fun delete(mushroom: Mushroom)
