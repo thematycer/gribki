@@ -41,6 +41,7 @@ fun MushroomScreen(
                     label = { Text("nazev houby:") },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(padding)
                 )
                 Row (
                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
