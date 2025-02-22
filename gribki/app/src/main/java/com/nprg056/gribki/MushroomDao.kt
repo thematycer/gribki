@@ -2,8 +2,6 @@ package com.nprg056.gribki
 
 
 
-import com.nprg056.gribki.Mushroom
-import com.nprg056.gribki.UsageType
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query

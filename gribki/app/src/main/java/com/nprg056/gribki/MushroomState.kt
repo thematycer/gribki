@@ -5,6 +5,6 @@ import com.nprg056.gribki.Mushroom
 data class MushroomState(
     val mushrooms: List<Mushroom> = emptyList(),
     val searchedName: String ="",
-    val usage: UsageType = UsageType.jedla,
+    val usage: UsageType = UsageType.Vsechny,
     val mushroomId: Int = 0,
 )

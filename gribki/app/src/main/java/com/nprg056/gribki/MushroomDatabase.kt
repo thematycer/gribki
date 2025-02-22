@@ -1,7 +1,7 @@
 package com.nprg056.gribki
 
 
-import com.nprg056.gribki.Mushroom
+
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
