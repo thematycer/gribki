@@ -37,19 +37,19 @@ fun MushroomScreen(
                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    SortType.values().forEach { sortType->
+                    UsageType.entries.forEach { usageType->
                         Row(
                             modifier = Modifier.clickable {
-                                onEvent(MushroomEvent.SortMushroom(sortType))
+                                onEvent(MushroomEvent.SortMushroom(usageType))
                             },
                             verticalAlignment = Alignment.CenterVertically
                         ){
-                            RadioButton(selected = state.sortType ==sortType,
+                            RadioButton(selected = state.usage ==usageType,
                                 onClick = {
-                                    onEvent(MushroomEvent.SortMushroom(sortType))
+                                    onEvent(MushroomEvent.SortMushroom(usageType))
                                 }
                             )
-                            Text(text = sortType.name)
+                            Text(text = usageType.name)
                         }
                     }
                 }

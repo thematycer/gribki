@@ -15,17 +15,17 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MushroomDao {
 
-    @Upsert
-    fun insert(mushroom: Mushroom)
+    //@Upsert
+    //suspend fun insert(mushroom: Mushroom)
 
-    @Delete
-    fun delete(mushroom: Mushroom)
+    //@Delete
+    //suspend fun delete(mushroom: Mushroom)
 
-    @Query("SELECT * FROM mushroom ORDER BY name ASC")
-    fun getMushroomByName(): Flow<List<Mushroom>>
+    @Query("SELECT * FROM mushroom WHERE name LIKE :name || '%' ORDER BY name ASC")
+    fun searchMushroomsByName(name: String): Flow<List<Mushroom>>
 
-    @Query("SELECT * FROM mushroom WHERE usage = :usageType ORDER BY name ASC")
-    fun getMushroomsByUsage(usageType: UsageType): Flow<List<Mushroom>>
+    @Query("SELECT * FROM mushroom WHERE name LIKE :name || '%' AND usage = :usageType ORDER BY name ASC")
+    fun getMushroomByNameAndUsage(name: String, usageType: UsageType): Flow<List<Mushroom>>
 
 
     //can add to select by name if needed

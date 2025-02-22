@@ -4,5 +4,6 @@ enum class UsageType{
     //muzeme pridat chutna, smrtelna, ...
     jedla,
     nejedla,
-    jedovata
+    jedovata,
+    vsechny
 }
