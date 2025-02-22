@@ -10,10 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
@@ -30,6 +33,15 @@ fun MushroomScreen(
             modifier = Modifier.fillMaxSize().padding(padding),
         ) {
             item{
+                OutlinedTextField(
+                    value = state.searchedName,
+                    onValueChange = { newValue ->
+                        onEvent(MushroomEvent.SearchMushroomName(newValue))
+                    },
+                    label = { Text("nazev houby:") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
                 Row (
                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                     verticalAlignment = Alignment.CenterVertically
@@ -57,6 +69,7 @@ fun MushroomScreen(
                     text = "${state.searchedName}"
                 )
             }
+
             items(state.mushrooms
             ){mushroom->
                 Row (
@@ -79,3 +92,4 @@ fun MushroomScreen(
         }
     }
 }
+
