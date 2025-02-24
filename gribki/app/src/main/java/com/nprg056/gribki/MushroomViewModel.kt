@@ -19,7 +19,7 @@ class MushroomViewModel(
     private val dao: MushroomDao
 ):ViewModel() {
     private val _state = MutableStateFlow(MushroomState())
-    private val _usageType = MutableStateFlow(UsageType.Jedla)
+    private val _usageType = MutableStateFlow(UsageType.Vsechny)
     private val _currentId = MutableStateFlow(0)
     private val _searchedName = MutableStateFlow("")
     //actual list of mushrooms according to type/name searched
@@ -28,7 +28,7 @@ class MushroomViewModel(
             when (usageType) {
                 UsageType.Vsechny -> {
                     dao.searchMushroomsByName(_searchedName.value)
-                }else -> {
+                } else -> {
                     dao.getMushroomByNameAndUsage(_searchedName.value, usageType)
                 }
             }
