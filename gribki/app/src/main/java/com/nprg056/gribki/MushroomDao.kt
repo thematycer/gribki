@@ -27,6 +27,6 @@ interface MushroomDao {
 
 
     //can add to select by name if needed
-    @Query("SELECT * FROM mushroom WHERE id = :id")
-    fun getMushroomById(id: Int):  Flow<List<Mushroom>>
+    //@Query("SELECT * FROM mushroom WHERE id = :id")
+    //fun getMushroomById(id: Int):  Flow<List<Mushroom>>
 }

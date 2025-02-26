@@ -46,7 +46,6 @@ class MushroomViewModel(
         MushroomState(
             mushrooms = mushrooms,
             usage = usageType,
-            mushroomId = currentId,
             searchedName = searchedName
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MushroomState())
