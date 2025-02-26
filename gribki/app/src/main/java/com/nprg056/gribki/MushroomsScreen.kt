@@ -36,6 +36,7 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
 import androidx.compose.ui.res.painterResource
 
 
@@ -140,9 +141,7 @@ fun MushroomScreen(
                         Image(
                            painter = painterResource(id = mushroom.imageID),
                             contentDescription = "Image of ${mushroom.name}",
-                            modifier = Modifier.padding(8.dp),
-                            
-
+                            modifier = Modifier.padding(8.dp).size(100.dp)
                         )
 
                         }
