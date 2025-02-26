@@ -19,10 +19,10 @@ interface MushroomDao {
     //@Delete
     //suspend fun delete(mushroom: Mushroom)
 
-    @Query("SELECT * FROM mushroom WHERE name LIKE :name || '%' ORDER BY name ASC")
+    @Query("SELECT * FROM mushroom WHERE name LIKE '%'|| :name || '%' ORDER BY name ASC")
     fun searchMushroomsByName(name: String): Flow<List<Mushroom>>
 
-    @Query("SELECT * FROM mushroom WHERE name LIKE :name || '%' AND usage = :usageType ORDER BY name ASC")
+    @Query("SELECT * FROM mushroom WHERE name LIKE '%'||:name || '%' AND usage = :usageType ORDER BY name ASC")
     fun getMushroomByNameAndUsage(name: String, usageType: UsageType): Flow<List<Mushroom>>
 
 

@@ -24,15 +24,16 @@ class MushroomViewModel(
     private val _searchedName = MutableStateFlow("")
     //actual list of mushrooms according to type/name searched
     private val _mushrooms = _usageType
-        .flatMapLatest { usageType ->
+        .combine(_searchedName) { usageType, searchedName ->
             when (usageType) {
-                UsageType.Vsechny -> {
-                    dao.searchMushroomsByName(_searchedName.value)
-                } else -> {
-                    dao.getMushroomByNameAndUsage(_searchedName.value, usageType)
-                }
+                UsageType.Vsechny -> {dao.searchMushroomsByName(searchedName)}
+                else -> {dao.getMushroomByNameAndUsage(searchedName, usageType)}
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        }
+        .flatMapLatest { it }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+
 
 
     //if any of the variables changes-> change state in mushroomState
