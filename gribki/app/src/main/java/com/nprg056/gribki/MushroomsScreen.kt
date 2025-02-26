@@ -44,7 +44,7 @@ import androidx.compose.ui.res.painterResource
 fun MushroomScreen(
     state: MushroomState,
     onEvent: (MushroomEvent)->Unit,
-    // onMushroomClick: (Mushroom) -> Unit
+    //onMushroomClick: (Int) -> Unit
 ){
     Scaffold() { padding ->
         LazyColumn(
@@ -126,29 +126,27 @@ fun MushroomScreen(
                 Row (
                     modifier = Modifier.fillMaxWidth()
                 ){
-                    Column(
-                    ){
-                        Row {
-                        Text(
-                            text = "${mushroom.name}",
-                            color = Color.Blue,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.Serif,
-                            modifier = Modifier.padding(8.dp)
-                        )
 
-                        Image(
-                           painter = painterResource(id = mushroom.imageID),
-                            contentDescription = "Image of ${mushroom.name}",
-                            modifier = Modifier.padding(8.dp).size(100.dp)
-                        )
+                    Text(
+                        text = "${mushroom.name}",
+                        color = Color.Blue,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Serif,
+                        modifier = Modifier.padding(8.dp)
+                    )
 
-                        }
-                    }
+                    Image(
+                        painter = painterResource(id = mushroom.imageID),
+                        contentDescription = "Image of ${mushroom.name}",
+                        modifier = Modifier.padding(8.dp).size(100.dp)
+                    )
+
                 }
+
             }
         }
     }
 }
+
 
