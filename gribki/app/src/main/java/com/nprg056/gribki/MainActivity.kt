@@ -43,21 +43,21 @@ class MainActivity : ComponentActivity() {
                     desc = "Jedlá houba s hnědým kloboukem",
                     loc = "V smrkových lesích",
                     usage = UsageType.Jedla,
-                    imageID = R.drawable.bedla_vysoka_background
+                    imageID = R.mipmap.bedla_vysoka_foreground
                 ),
                 Mushroom(
                     name = "Muchomůrka červená",
                     desc = "Jedovatá houba s červeným kloboukem",
                     loc = "Listnaté a smíšené lesy",
                     usage = UsageType.Jedovata,
-                    imageID = R.drawable.bedla_vysoka_background
+                    imageID = R.mipmap.bedla_vysoka_foreground
                 ),
                 Mushroom(
                     name = "Bedla vysoká",
                     desc = "Chutná jedlá houba",
                     loc = "Louky a pastviny",
                     usage = UsageType.Jedla,
-                    imageID = R.drawable.bedla_vysoka_background
+                    imageID = R.mipmap.bedla_vysoka_foreground
                 )
             )
 
