@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private suspend fun populateDatabase() {
+        applicationContext.deleteDatabase("mushroom_database.db")//need to deleta database to get data updated for now
         val existingMushrooms = db.MushroomDao().searchMushroomsByName("").first()
         if (existingMushrooms.isEmpty()) {
             val mushrooms = listOf(
@@ -42,21 +43,21 @@ class MainActivity : ComponentActivity() {
                     desc = "Jedlá houba s hnědým kloboukem",
                     loc = "V smrkových lesích",
                     usage = UsageType.Jedla,
-                    imageID = 1 // TODO
+                    imageID = R.drawable.bedla_vysoka_background
                 ),
                 Mushroom(
                     name = "Muchomůrka červená",
                     desc = "Jedovatá houba s červeným kloboukem",
                     loc = "Listnaté a smíšené lesy",
                     usage = UsageType.Jedovata,
-                    imageID = 2
+                    imageID = R.drawable.bedla_vysoka_background
                 ),
                 Mushroom(
                     name = "Bedla vysoká",
                     desc = "Chutná jedlá houba",
                     loc = "Louky a pastviny",
                     usage = UsageType.Jedla,
-                    imageID = 3
+                    imageID = R.drawable.bedla_vysoka_background
                 )
             )
 

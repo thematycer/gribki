@@ -35,6 +35,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 
 
 @Composable
@@ -133,6 +135,7 @@ fun MushroomScreen(
                 ){
                     Column(
                     ){
+                        Row {
                         Text(
                             text = "${mushroom.name}",
                             color = Color.Blue,
@@ -141,10 +144,16 @@ fun MushroomScreen(
                             fontFamily = FontFamily.Serif,
                             modifier = Modifier.padding(8.dp)
                         )
-                        //Image(
-                        //    painter = painterResource(id = mushroom.imageID),
-                        //    contentDescription = "Mushroom Image"
-                        //)
+
+                        Image(
+                           painter = painterResource(id = mushroom.imageID),
+                            contentDescription = "Image of ${mushroom.name}",
+                            modifier = Modifier.padding(8.dp),
+                            
+
+                        )
+
+                        }
                     }
                 }
             }
