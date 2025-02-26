@@ -120,14 +120,6 @@ fun MushroomScreen(
                     }
                 }
             }
-
-//                Text(
-//                    text = "${state.usage}"
-//                )
-//                Text(
-//                    text = "${state.searchedName}"
-//                )
-
             items(state.mushrooms
             ){mushroom->
                 Row (
