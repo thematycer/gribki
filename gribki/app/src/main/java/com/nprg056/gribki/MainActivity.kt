@@ -14,7 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.first
-
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 class MainActivity : ComponentActivity() {
     private val db by lazy {
@@ -77,8 +81,30 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val navController = rememberNavController()
             val state by viewModel.state.collectAsState()
-            MushroomScreen(state = state, onEvent = viewModel::onEvent)
+
+            NavHost(navController = navController, startDestination = "mushroom_list") {
+                composable("mushroom_list") {
+                    MushroomScreen(
+                        state = state,
+                        onEvent = viewModel::onEvent,
+                        onMushroomClick = { id -> navController.navigate("mushroom_detail/$id") }
+                    )
+                }
+                composable(
+                    route = "mushroom_detail/{id}",
+                    arguments = listOf(navArgument("id") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val mushroomId = backStackEntry.arguments?.getInt("id") ?: 0
+                    val mushroom = state.mushrooms.find { it.id == mushroomId }
+
+                    MushroomDetailScreen(
+                        mushroom = mushroom,
+                        onBackClick = { navController.popBackStack() }
+                    )
+                }
+            }
         }
     }
 }

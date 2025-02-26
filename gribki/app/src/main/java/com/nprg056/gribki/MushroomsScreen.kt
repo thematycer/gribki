@@ -37,6 +37,7 @@ import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.res.painterResource
 
 
@@ -44,7 +45,7 @@ import androidx.compose.ui.res.painterResource
 fun MushroomScreen(
     state: MushroomState,
     onEvent: (MushroomEvent)->Unit,
-    //onMushroomClick: (Int) -> Unit
+    onMushroomClick: (Int) -> Unit
 ){
     Scaffold() { padding ->
         LazyColumn(
@@ -125,6 +126,8 @@ fun MushroomScreen(
             ){mushroom->
                 Row (
                     modifier = Modifier.fillMaxWidth()
+                        .clickable { onMushroomClick(mushroom.id) }
+                        .padding(padding)
                 ){
 
                     Text(
@@ -149,4 +152,75 @@ fun MushroomScreen(
     }
 }
 
+
+
+@Composable
+fun MushroomDetailScreen(
+    mushroom: Mushroom?,
+    onBackClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "<- zpatky",
+            modifier = Modifier
+                .clickable { onBackClick() }
+                .padding(8.dp),
+            color = Color.Blue,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Serif,
+        )
+
+        mushroom?.let {
+            Image(
+                painter = painterResource(id = it.imageID),
+                contentDescription = "Image of ${it.name}",
+                modifier = Modifier.size(150.dp)
+            )
+            Text(
+                text = "Name: ${it.name}",
+                color = Color.Blue,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+                modifier = Modifier.padding(8.dp)
+                )
+            Text(
+                text = "Popis: ${it.desc}",
+                color = Color.Blue,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+                modifier = Modifier.padding(8.dp)
+                )
+            Text(
+                text = "Lokalita: ${it.loc}",
+                color = Color.Blue,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+                modifier = Modifier.padding(8.dp)
+                )
+            Text(
+                text = "Použití: : ${it.usage}",
+                color = Color.Blue,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily.Serif,
+                modifier = Modifier.padding(8.dp)
+            )
+        } ?: Text(
+            text = "Houba nebyla nalezena!",
+            color = Color.Red,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Serif,
+            modifier = Modifier.padding(8.dp)
+        )
+    }
+}
 
