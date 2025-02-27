@@ -13,8 +13,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 
 
-
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class MushroomViewModel(
     private val dao: MushroomDao
@@ -24,7 +22,7 @@ class MushroomViewModel(
     private val _currentId = MutableStateFlow(0)
     private val _searchedName = MutableStateFlow("")
     private val _fontSize = MutableStateFlow(16f)
-    //actual list of mushrooms according to type/name searched
+    // actual list of mushrooms according to type/name searched
     private val _mushrooms = _usageType
         .combine(_searchedName) { usageType, searchedName ->
             when (usageType) {
@@ -36,9 +34,7 @@ class MushroomViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
 
-
-
-    //if any of the variables changes-> change state in mushroomState
+    // if any of the variables changes -> change state in mushroomState
     val state: StateFlow<MushroomState> = combine(
         _mushrooms,
         _usageType,
@@ -55,9 +51,7 @@ class MushroomViewModel(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MushroomState())
 
 
-
-
-    //on user event->call something from mushroomEvent
+    // on user event->call something from mushroomEvent
     fun  onEvent(event: MushroomEvent){
         when(event){
             is MushroomEvent.SortMushroom->{
@@ -75,6 +69,4 @@ class MushroomViewModel(
             }
         }
     }
-
 }
-

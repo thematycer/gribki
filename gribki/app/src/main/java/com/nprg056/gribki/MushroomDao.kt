@@ -1,7 +1,5 @@
 package com.nprg056.gribki
 
-
-
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
@@ -9,7 +7,6 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
-//here you write sql queries
 @Dao
 interface MushroomDao {
 
