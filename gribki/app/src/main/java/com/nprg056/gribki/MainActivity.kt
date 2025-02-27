@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private suspend fun populateDatabase() {
-        applicationContext.deleteDatabase("mushroom_database.db")//need to deleta database to get data updated for now
+        applicationContext.deleteDatabase("mushroom_database.db") //need to deleta database to get data updated for now
         val existingMushrooms = db.MushroomDao().searchMushroomsByName("").first()
         if (existingMushrooms.isEmpty()) {
             val mushrooms = listOf(
@@ -167,7 +167,8 @@ class MainActivity : ComponentActivity() {
                         onEvent = viewModel::onEvent,
                         state = state,
                         onBackClick = { navController.navigate("mushroom_list") },
-                        onSaveClick = {saveData(state)}
+                        onSaveClick = { saveData(state) },
+                        onQuitClick = { finishAffinity() }
                     )
                 }
             }
@@ -187,6 +188,4 @@ class MainActivity : ComponentActivity() {
         val fontSize = sharedPreferences.getFloat("fontSize", 16f)
         viewModel.onEvent(MushroomEvent.ChangeFontSize(fontSize))
     }
-
 }
-
