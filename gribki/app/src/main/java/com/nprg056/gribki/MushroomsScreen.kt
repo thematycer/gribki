@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Slider
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 
 
 @Composable
@@ -42,7 +43,7 @@ fun MushroomScreen(
     onMushroomClick: (Int) -> Unit,
     screenSettingClick: () -> Unit
 ){
-    Scaffold() { padding ->
+    Scaffold { padding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -54,7 +55,7 @@ fun MushroomScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFF90EE90))
-                        .padding(16.dp), //.clickable { screenSettingClick() },
+                        .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Row(
@@ -95,7 +96,7 @@ fun MushroomScreen(
                     onValueChange = { newValue ->
                         onEvent(MushroomEvent.SearchMushroomName(newValue))
                     },
-                    label = { Text("Název houby:", fontSize = (state.fontSize).sp,) },
+                    label = { Text("Název houby:", fontSize = (state.fontSize).sp) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -106,8 +107,6 @@ fun MushroomScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState()),
-//                        .background(Color.LightGray)
-//                        .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     val czechLabels = mapOf(
@@ -131,7 +130,6 @@ fun MushroomScreen(
                                     onEvent(MushroomEvent.SortMushroom(usageType))
                                 },
                                 colors = RadioButtonDefaults.colors(
-                                    //selectedColor = Color.Green,
                                     unselectedColor = Color.Gray,
                                     disabledSelectedColor = Color.LightGray,
                                     disabledUnselectedColor = Color.LightGray
@@ -150,10 +148,10 @@ fun MushroomScreen(
 
             // mushroom list
             items(state.mushrooms) { mushroom ->
-                val highlightColor = when {
-                    mushroom.usage == UsageType.Jedla -> Color(0xFFDCEDC8)
-                    mushroom.usage == UsageType.Nejedla -> Color(0xFFFFE0B2)
-                    mushroom.usage == UsageType.Jedovata -> Color(0xFFFFCDD2)
+                val highlightColor = when (mushroom.usage) {
+                    UsageType.Jedla -> Color(0xFFDCEDC8)
+                    UsageType.Nejedla -> Color(0xFFFFE0B2)
+                    UsageType.Jedovata -> Color(0xFFFFCDD2)
                     else -> Color(0xFFF5F5F5)
                 }
                 Box(
@@ -176,13 +174,18 @@ fun MushroomScreen(
                                 .padding(end = 16.dp)
                         )
 
-                        Column {
+                        Column(
+                            modifier = Modifier.weight(0.85f)
+                        ) {
                             Text(
                                 text = mushroom.name,
                                 color = Color.DarkGray,
                                 fontSize = (state.fontSize).sp,
                                 fontWeight = FontWeight.Bold,
-                                fontFamily = FontFamily.Serif
+                                fontFamily = FontFamily.Serif,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                                softWrap = true,
                             )
                         }
                         Text(
@@ -191,8 +194,8 @@ fun MushroomScreen(
                             fontSize = (state.fontSize * 1.5).sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
-                                .weight(1f)
-                                .padding(8.dp),
+                                .weight(0.15f)
+                                .padding(horizontal = 8.dp),
                             textAlign = androidx.compose.ui.text.style.TextAlign.End
                         )
                     }
@@ -252,12 +255,12 @@ fun MushroomDetailScreen(
             }
 
             mushroom?.let {
-                val (backgroundColor, statusText, statusColor) = when {
-                    it.usage == UsageType.Jedla ->
+                val (backgroundColor, statusText, statusColor) = when (it.usage) {
+                    UsageType.Jedla ->
                         Triple(Color(0xFFDCEDC8), "Jedlá", Color(0xFF33691E))
-                    it.usage == UsageType.Nejedla ->
+                    UsageType.Nejedla ->
                         Triple(Color(0xFFFFE0B2), "Nejedlá", Color(0xFFE65100))
-                    it.usage == UsageType.Jedovata ->
+                    UsageType.Jedovata ->
                         Triple(Color(0xFFFFCDD2), "Jedovatá", Color(0xFFB71C1C))
                     else -> Triple(Color(0xFFF5F5F5), "", Color.Gray)
                 }
