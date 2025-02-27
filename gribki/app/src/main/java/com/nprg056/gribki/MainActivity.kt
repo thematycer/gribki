@@ -65,7 +65,15 @@ class MainActivity : ComponentActivity() {
                     loc = "Louky a pastviny",
                     usage = UsageType.Jedla,
                     imageID = R.mipmap.bedla_vysoka_foreground
-                )
+                ) ,
+                Mushroom(
+                    name = "Mycena alba",
+                    desc = "Klobouk je až 1,5 cm široký, tupě kuželovitý, na temeni bledorůžový, směrem k okraji bledší a prosvítavě rýhovaný. Lupeny bělavé až slabě nažloutlé nebo narůžovělé. Třeň bělavý až slabě nažloutlý, dutý, křehký. Chuť a vůně nevýrazná.",
+                    loc = "Vyrůstá nehojně, jednotlivě nebo v menších skupinách koncem léta a na podzim na nehnojených mechatých loukách.",
+                    usage = UsageType.Nejedla,
+                    imageID = R.mipmap.mycena_alba_foreground
+            )
+
             )
 
             mushrooms.forEach { mushroom ->
