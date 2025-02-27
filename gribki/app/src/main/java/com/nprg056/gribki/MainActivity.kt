@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity() {
                     MushroomDetailScreen(
                         mushroom = mushroom,
                         state = state,
-                        onBackClick = { navController.popBackStack() }
+                        onBackClick = { navController.navigate("mushroom_list") }
                     )
                 }
                 composable("settings") {
@@ -115,7 +115,7 @@ class MainActivity : ComponentActivity() {
                         fontSize = state.fontSize,
                         onEvent = viewModel::onEvent,
                         state = state,
-                        onBackClick = { navController.popBackStack() },
+                        onBackClick = { navController.navigate("mushroom_list") },
                         onSaveClick = {saveData(state)}
                     )
                 }
