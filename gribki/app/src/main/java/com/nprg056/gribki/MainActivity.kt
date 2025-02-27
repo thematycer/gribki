@@ -79,7 +79,43 @@ class MainActivity : ComponentActivity() {
                     loc = "Čechratka černohuňatá je velice hojná houba jehličnatých lesů, kde vyrůstá od července do listopadu na pařezech a kořenech smrků.",
                     usage = UsageType.Nejedla,
                     imageID = R.mipmap.cechratka_cernohunata_foreground
-                )
+                ),
+                Mushroom(
+                    name = "Hnojník inkoustový",
+                    desc = "Na stříbřitém klobouku, který je v mládí vejčitého tvaru a později se jeho okraje postupně obloukovitě zvedají, mívá hnědé šupinky. Lupeny jsou velmi husté. Ve stáří se plodnice roztékají do černé inkoustové kaše (autolýza).",
+                    loc = "Hnojník inkoustový roste dosti hojně od července do listopadu na prosvětlených travnatých místech bohatších na dusík. Objevuje se zpravidla v trsech na loukách, v parcích, zahradách, ale i v lesích. Vyrůstá přímo ze země nebo z tlejícího dřeva či dřevních zbytků.",
+                    usage = UsageType.Jedla,
+                    imageID = R.mipmap.hnojnik_inkoustovy_foreground
+                ),
+                Mushroom(
+                    name = "Muchomůrka jízlivá",
+                    desc = " Klobouk je až 7 cm široký, dlouho vejčitý, s bílou až nažloutou, hladkou pokožkou. Okraj klobouku v mládí spojuje se třeněm bílá plachetka, později tvořící prsten. Lupeny jsou husté, bílé. Třeň je bílý, válcovitý, na bázi rozšířený v kulovitou hlízu obalenou bílou blanitou pochvou, někdy skrytou v substrátu. Povrch třeně je typicky vláknitě šupinatý.",
+                    loc = "Vyrůstá od července do října především v jehličnatých, ale i v listnatých lesích pod smrky, jedlemi a buky. Objevuje se zejména ve vyšších polohách, na kyselých půdách.",
+                    usage = UsageType.Jedovata,
+                    imageID = R.mipmap.muchomurka_jizliva_foreground
+                ),
+                Mushroom(
+                    name = "Líha srostlá",
+                    desc = " Plodnice líhy srostlé jsou čistě bíle zbarvené, jemně ojíněné. Klobouk je vyklenutý až mírně prohloubený, v mládí s podvinutým okrajem. Krémově zbarvené lupeny jsou nízké, široce připojené až mírně sbíhavé. Třeň je bílý až krémový, vločkatě vláknitý. Dužnina je pružná, s nasládlou vůní, přirovnávanou k vůni dymnivky (Corydalis). Plodnice dosahují výšky do 10 cm, šířka klobouku se pohybuje od 2 do 10 cm.",
+                    loc = "Líha srostlá se vyskytuje od července do listopadu v trsech na zemi v lesích i mimo les. Vyhovují jí ruderální a na dusík bohatá místa, jako jsou okraje cest a porosty kopřiv. Dokonce jsem ji našla, jak prorůstá vrstvou asfaltu na starší lesní cestě.",
+                    usage = UsageType.Jedovata,
+                    imageID = R.mipmap.liha_srostla_foreground
+                ),
+                Mushroom(
+                    name = "Měkkouš kadeřavý",
+                    desc = "Je nápadný měkkými mušlovitými plodnicemi, které mají na spodní straně zkadeřené bělavé lištny. Svrchní strana je jemně plstnatá, hnědá, směrem k okraji světlejší až téměř bílá. Plodnice dosahují velikosti do 2,5 cm.",
+                    loc = "Měkkouš kadeřavý vyrůstá po celý rok na mrtvém dřevě různých listnáčů, velice často buků a bříz. Upřednostňuje vyšší polohy.",
+                    usage = UsageType.Nejedla,
+                    imageID = R.mipmap.mekkous_kaderavy_foreground
+                ),
+                /*
+                Mushroom(
+                    name = "",
+                    desc = "",
+                    loc = "",
+                    usage = UsageType.Jedovata,
+                    imageID = R.mipmap.muchomurka_jizliva_foreground
+                ),*/
 
             )
 
