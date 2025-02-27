@@ -150,9 +150,9 @@ fun MushroomScreen(
             // mushroom list
             items(state.mushrooms) { mushroom ->
                 val highlightColor = when {
-                    mushroom.usage.toString().contains("jedla", ignoreCase = true) -> Color(0xFFDCEDC8)
-                    mushroom.usage.toString().contains("nejedla", ignoreCase = true) -> Color(0xFFFFE0B2)
-                    mushroom.usage.toString().contains("jedovata", ignoreCase = true) -> Color(0xFFFFCDD2)
+                    mushroom.usage == UsageType.Jedla -> Color(0xFFDCEDC8)
+                    mushroom.usage == UsageType.Nejedla -> Color(0xFFFFE0B2)
+                    mushroom.usage == UsageType.Jedovata -> Color(0xFFFFCDD2)
                     else -> Color(0xFFF5F5F5)
                 }
                 Box(
