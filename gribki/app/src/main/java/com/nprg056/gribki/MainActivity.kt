@@ -72,7 +72,14 @@ class MainActivity : ComponentActivity() {
                     loc = "Vyrůstá nehojně, jednotlivě nebo v menších skupinách koncem léta a na podzim na nehnojených mechatých loukách.",
                     usage = UsageType.Nejedla,
                     imageID = R.mipmap.mycena_alba_foreground
-            )
+                ),
+                Mushroom(
+                    name = "Čechratka černohuňatá",
+                    desc = "Je dobře poznatelná podle hnědého klobouku, sbíhavých žlutých lupenů a černě huňatého tlustého třeně. Klobouky dosahují velikosti až 20 cm v průměru.",
+                    loc = "Čechratka černohuňatá je velice hojná houba jehličnatých lesů, kde vyrůstá od července do listopadu na pařezech a kořenech smrků.",
+                    usage = UsageType.Nejedla,
+                    imageID = R.mipmap.cechratka_cernohunata_foreground
+                )
 
             )
 
