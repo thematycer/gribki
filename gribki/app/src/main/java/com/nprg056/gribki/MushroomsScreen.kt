@@ -95,7 +95,7 @@ fun MushroomScreen(
                     onValueChange = { newValue ->
                         onEvent(MushroomEvent.SearchMushroomName(newValue))
                     },
-                    label = { Text("Název houby:") },
+                    label = { Text("Název houby:", fontSize = (state.fontSize).sp,) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
