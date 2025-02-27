@@ -17,29 +17,19 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.RadioButtonDefaults
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
-import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.ui.res.painterResource
 
@@ -70,13 +60,16 @@ fun MushroomScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+                        // heading
                         Text(
                             text = "Atlas Hub",
                             color = Color.Black,
                             fontSize = (state.fontSize * 2).sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f).padding(vertical = 15.dp)
                         )
+
+                        // settings button
                         Box(
                             modifier = Modifier
                                 .size(48.dp)
@@ -94,6 +87,7 @@ fun MushroomScreen(
                 }
             }
 
+            // search bar
             item {
                 OutlinedTextField(
                     value = state.searchedName,
@@ -105,6 +99,8 @@ fun MushroomScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 )
+
+                // mushroom edibility radio button
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -151,12 +147,19 @@ fun MushroomScreen(
                 }
             }
 
+            // mushroom list
             items(state.mushrooms) { mushroom ->
+                val highlightColor = when {
+                    mushroom.usage.toString().contains("jedla", ignoreCase = true) -> Color(0xFFDCEDC8)
+                    mushroom.usage.toString().contains("nejedla", ignoreCase = true) -> Color(0xFFFFE0B2)
+                    mushroom.usage.toString().contains("jedovata", ignoreCase = true) -> Color(0xFFFFCDD2)
+                    else -> Color(0xFFF5F5F5)
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .background(Color(0xFFF5F5F5), RoundedCornerShape(8.dp))
+                        .background(highlightColor, RoundedCornerShape(8.dp))
                         .clickable { onMushroomClick(mushroom.id) }
                         .padding(8.dp)
                 ) {
