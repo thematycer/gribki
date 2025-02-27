@@ -35,7 +35,10 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.ui.res.painterResource
@@ -91,7 +94,6 @@ fun MushroomScreen(
                 }
             }
 
-            // Radio Button Bar
             item {
                 OutlinedTextField(
                     value = state.searchedName,
@@ -192,29 +194,6 @@ fun MushroomScreen(
                     }
                 }
             }
-
-//            items(state.mushrooms) { mushroom->
-//                Row (
-//                    modifier = Modifier.fillMaxWidth()
-//                        .clickable { onMushroomClick(mushroom.id) }
-//                        .padding(padding)
-//                ){
-//                    Text(
-//                        text = mushroom.name,
-//                        color = Color.Blue,
-//                        fontSize = (state.fontSize).sp,
-//                        fontWeight = FontWeight.Bold,
-//                        fontFamily = FontFamily.Serif,
-//                        modifier = Modifier.padding(8.dp)
-//                    )
-//
-//                    Image(
-//                        painter = painterResource(id = mushroom.imageID),
-//                        contentDescription = "Image of ${mushroom.name}",
-//                        modifier = Modifier.padding(8.dp).size(100.dp)
-//                    )
-//                }
-//            }
         }
     }
 }
@@ -230,68 +209,129 @@ fun MushroomDetailScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFFF9F9F9))
             .padding(16.dp)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
-        Text(
-            text = "<- zpět",
+        Row(
             modifier = Modifier
-                .clickable { onBackClick() }
-                .padding(8.dp),
-            color = Color.Blue,
-            fontSize = (state.fontSize).sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-        )
-
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
+                    .clickable { onBackClick() }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "←",
+                        fontSize = (state.fontSize * 1.2).sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.DarkGray
+                    )
+                    Text(
+                        text = " Zpět",
+                        fontSize = (state.fontSize).sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.DarkGray
+                    )
+                }
+            }
+        }
         mushroom?.let {
-            Image(
-                painter = painterResource(id = it.imageID),
-                contentDescription = "Image of ${it.name}",
-                modifier = Modifier.size(150.dp)
-            )
-            Text(
-                text = "Name: ${it.name}",
-                color = Color.Blue,
-                fontSize = (state.fontSize).sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                modifier = Modifier.padding(8.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, RoundedCornerShape(12.dp))
+                    .padding(16.dp)
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = it.name,
+                        color = Color.DarkGray,
+                        fontSize = (state.fontSize * 1.5).sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Serif,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .background(Color(0xFFF5F5F5), RoundedCornerShape(8.dp))
+                            .padding(8.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = it.imageID),
+                            contentDescription = "Image of ${it.name}",
+                            modifier = Modifier
+                                .size(200.dp)
+                                .padding(8.dp)
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)
+                    ) {
+                        @Composable
+                        fun InfoSection(label: String, content: String) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            ) {
+                                Text(
+                                    text = label,
+                                    color = Color(0xFF4CAF50),
+                                    fontSize = (state.fontSize * 0.9).sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily.Serif
+                                )
+                                Text(
+                                    text = content,
+                                    color = Color.DarkGray,
+                                    fontSize = (state.fontSize).sp,
+                                    fontFamily = FontFamily.Serif,
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+                            }
+                        }
+
+                        InfoSection("Popis", it.desc)
+                        InfoSection("Lokalita", it.loc)
+                        InfoSection("Použití", it.usage.toString())
+                    }
+                }
+            }
+        } ?: Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "⚠️",
+                    fontSize = (state.fontSize * 2).sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
-            Text(
-                text = "Popis: ${it.desc}",
-                color = Color.Blue,
-                fontSize = (state.fontSize).sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                modifier = Modifier.padding(8.dp)
+                Text(
+                    text = "Houba nebyla nalezena!",
+                    color = Color.Red,
+                    fontSize = (state.fontSize).sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Serif
                 )
-            Text(
-                text = "Lokalita: ${it.loc}",
-                color = Color.Blue,
-                fontSize = (state.fontSize).sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                modifier = Modifier.padding(8.dp)
-                )
-            Text(
-                text = "Použití: : ${it.usage}",
-                color = Color.Blue,
-                fontSize = (state.fontSize).sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                modifier = Modifier.padding(8.dp)
-            )
-        } ?: Text(
-            text = "Houba nebyla nalezena!",
-            color = Color.Red,
-            fontSize = (state.fontSize).sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-            modifier = Modifier.padding(8.dp)
-        )
+            }
+        }
     }
 }
-
 
 @Composable
 fun ScreenSetting(
@@ -304,54 +344,142 @@ fun ScreenSetting(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .background(Color(0xFFF9F9F9))
+            .padding(16.dp)
+            .statusBarsPadding()
+            .navigationBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "<- zpatky",
+        Row(
             modifier = Modifier
-                .clickable { onBackClick() }
-                .padding(8.dp),
-            color = Color.Blue,
-            fontSize = (state.fontSize).sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Serif,
-        )
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(Color(0xFFE0E0E0), RoundedCornerShape(8.dp))
+                    .clickable { onBackClick() }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "←",
+                        fontSize = (state.fontSize * 1.2).sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.DarkGray
+                    )
+                    Text(
+                        text = " Zpět",
+                        fontSize = (state.fontSize).sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.DarkGray
+                    )
+                }
+            }
+        }
 
-        Text(text = "Nastavení",
-            fontSize = (state.fontSize*2).sp,
-            fontWeight = FontWeight.Bold
-        )
-
-
-        Text(
-            text = "Velikost písma: ${fontSize.toInt()} sp",
-            fontSize = (state.fontSize).sp
-        )
-        Slider(
-            value = fontSize,
-            onValueChange = { newSize ->
-                onEvent(MushroomEvent.ChangeFontSize(newSize))
-            },
-            valueRange = 12f..30f,
-            steps = 6
-        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color(0xFF90EE90), RoundedCornerShape(8.dp))
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Nastavení",
+                fontSize = (state.fontSize * 1.5).sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.DarkGray
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 24.dp)
+                .background(Color.White, RoundedCornerShape(12.dp))
                 .padding(16.dp)
-                .background(Color.Blue, shape = RoundedCornerShape(8.dp))
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Aktuální velikost písma",
+                    color = Color(0xFF4CAF50),
+                    fontSize = (state.fontSize * 0.9).sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp)
+                        .background(Color(0xFFF5F5F5), RoundedCornerShape(8.dp))
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Ukázkový text - ${fontSize.toInt()} sp",
+                        fontSize = fontSize.sp,
+                        color = Color.DarkGray
+                    )
+                }
+
+                Text(
+                    text = "Změnit velikost písma",
+                    color = Color(0xFF4CAF50),
+                    fontSize = (state.fontSize * 0.9).sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(top = 16.dp, bottom = 8.dp)
+                        .align(Alignment.Start)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "12",
+                        fontSize = (state.fontSize * 0.8).sp,
+                        color = Color.Gray
+                    )
+                    Slider(
+                        value = fontSize,
+                        onValueChange = { newSize ->
+                            onEvent(MushroomEvent.ChangeFontSize(newSize))
+                        },
+                        valueRange = 12f..30f,
+                        steps = 6,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 8.dp)
+                    )
+                    Text(
+                        text = "30",
+                        fontSize = (state.fontSize * 0.8).sp,
+                        color = Color.Gray
+                    )
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)
+                .background(Color(0xFF4CAF50), RoundedCornerShape(8.dp))
                 .clickable { onSaveClick() },
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Uložit",
+                text = "Uložit nastavení",
                 color = Color.White,
                 fontSize = (state.fontSize).sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(12.dp)
+                modifier = Modifier.padding(vertical = 16.dp)
             )
         }
     }
-
 }
