@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Slider
 import androidx.compose.ui.res.painterResource
 
 
@@ -45,7 +46,8 @@ import androidx.compose.ui.res.painterResource
 fun MushroomScreen(
     state: MushroomState,
     onEvent: (MushroomEvent)->Unit,
-    onMushroomClick: (Int) -> Unit
+    onMushroomClick: (Int) -> Unit,
+    screenSettingClick: () -> Unit
 ){
     Scaffold() { padding ->
         LazyColumn(
@@ -59,13 +61,13 @@ fun MushroomScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFF90EE90))
-                        .padding(16.dp),
+                        .padding(16.dp).clickable { screenSettingClick() },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Atlas Hub",
                         color = Color.Black,
-                        fontSize = 24.sp,
+                        fontSize = (state.fontSize*2).sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -115,7 +117,7 @@ fun MushroomScreen(
                             Text(
                                 text = usageType.name,
                                 color = Color.DarkGray,
-                                fontSize = 12.sp,
+                                fontSize = (state.fontSize*0.8).sp,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -133,7 +135,7 @@ fun MushroomScreen(
                     Text(
                         text = "${mushroom.name}",
                         color = Color.Blue,
-                        fontSize = 20.sp,
+                        fontSize = (state.fontSize).sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Serif,
                         modifier = Modifier.padding(8.dp)
@@ -157,7 +159,8 @@ fun MushroomScreen(
 @Composable
 fun MushroomDetailScreen(
     mushroom: Mushroom?,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    state: MushroomState,
 ) {
     Column(
         modifier = Modifier
@@ -170,7 +173,7 @@ fun MushroomDetailScreen(
                 .clickable { onBackClick() }
                 .padding(8.dp),
             color = Color.Blue,
-            fontSize = 20.sp,
+            fontSize = (state.fontSize).sp,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Serif,
         )
@@ -184,7 +187,7 @@ fun MushroomDetailScreen(
             Text(
                 text = "Name: ${it.name}",
                 color = Color.Blue,
-                fontSize = 20.sp,
+                fontSize = (state.fontSize).sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
@@ -192,7 +195,7 @@ fun MushroomDetailScreen(
             Text(
                 text = "Popis: ${it.desc}",
                 color = Color.Blue,
-                fontSize = 20.sp,
+                fontSize = (state.fontSize).sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
@@ -200,7 +203,7 @@ fun MushroomDetailScreen(
             Text(
                 text = "Lokalita: ${it.loc}",
                 color = Color.Blue,
-                fontSize = 20.sp,
+                fontSize = (state.fontSize).sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
@@ -208,7 +211,7 @@ fun MushroomDetailScreen(
             Text(
                 text = "Použití: : ${it.usage}",
                 color = Color.Blue,
-                fontSize = 20.sp,
+                fontSize = (state.fontSize).sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily.Serif,
                 modifier = Modifier.padding(8.dp)
@@ -216,7 +219,7 @@ fun MushroomDetailScreen(
         } ?: Text(
             text = "Houba nebyla nalezena!",
             color = Color.Red,
-            fontSize = 20.sp,
+            fontSize = (state.fontSize).sp,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Serif,
             modifier = Modifier.padding(8.dp)
@@ -224,3 +227,66 @@ fun MushroomDetailScreen(
     }
 }
 
+
+@Composable
+fun ScreenSetting(
+    onEvent: (MushroomEvent)->Unit,
+    state: MushroomState,
+    fontSize: Float,
+    onBackClick: () -> Unit,
+    onSaveClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "<- zpatky",
+            modifier = Modifier
+                .clickable { onBackClick() }
+                .padding(8.dp),
+            color = Color.Blue,
+            fontSize = (state.fontSize).sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Serif,
+        )
+
+        Text(text = "Nastavení",
+            fontSize = (state.fontSize*2).sp,
+            fontWeight = FontWeight.Bold
+        )
+
+
+        Text(
+            text = "Velikost písma: ${fontSize.toInt()} sp",
+            fontSize = (state.fontSize).sp
+        )
+        Slider(
+            value = fontSize,
+            onValueChange = { newSize ->
+                onEvent(MushroomEvent.ChangeFontSize(newSize))
+            },
+            valueRange = 12f..30f,
+            steps = 6
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .background(Color.Blue, shape = RoundedCornerShape(8.dp))
+                .clickable { onSaveClick() },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Uložit",
+                color = Color.White,
+                fontSize = (state.fontSize).sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(12.dp)
+            )
+        }
+    }
+
+}

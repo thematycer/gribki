@@ -1,5 +1,6 @@
 package com.nprg056.gribki
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nprg056.gribki.UsageType
@@ -22,6 +23,7 @@ class MushroomViewModel(
     private val _usageType = MutableStateFlow(UsageType.Vsechny)
     private val _currentId = MutableStateFlow(0)
     private val _searchedName = MutableStateFlow("")
+    private val _fontSize = MutableStateFlow(16f)
     //actual list of mushrooms according to type/name searched
     private val _mushrooms = _usageType
         .combine(_searchedName) { usageType, searchedName ->
@@ -41,12 +43,14 @@ class MushroomViewModel(
         _mushrooms,
         _usageType,
         _currentId,
-        _searchedName
-    ) { mushrooms, usageType, currentId, searchedName ->
+        _searchedName,
+        _fontSize
+    ) { mushrooms, usageType, currentId, searchedName, fontSize ->
         MushroomState(
             mushrooms = mushrooms,
             usage = usageType,
-            searchedName = searchedName
+            searchedName = searchedName,
+            fontSize = fontSize
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MushroomState())
 
@@ -66,6 +70,11 @@ class MushroomViewModel(
             is MushroomEvent.SearchMushroomName->{
                 _searchedName.value = event.name
             }
+            is MushroomEvent.ChangeFontSize -> {
+                _fontSize.value = event.fontSize
+            }
         }
     }
+
 }
+

@@ -1,6 +1,8 @@
 package com.nprg056.gribki
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
 class MainActivity : ComponentActivity() {
+
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -73,6 +76,7 @@ class MainActivity : ComponentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadData()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
@@ -89,7 +93,8 @@ class MainActivity : ComponentActivity() {
                     MushroomScreen(
                         state = state,
                         onEvent = viewModel::onEvent,
-                        onMushroomClick = { id -> navController.navigate("mushroom_detail/$id") }
+                        onMushroomClick = { id -> navController.navigate("mushroom_detail/$id") },
+                        screenSettingClick = { navController.navigate("settings") }
                     )
                 }
                 composable(
@@ -101,11 +106,36 @@ class MainActivity : ComponentActivity() {
 
                     MushroomDetailScreen(
                         mushroom = mushroom,
+                        state = state,
                         onBackClick = { navController.popBackStack() }
+                    )
+                }
+                composable("settings") {
+                    ScreenSetting(
+                        fontSize = state.fontSize,
+                        onEvent = viewModel::onEvent,
+                        state = state,
+                        onBackClick = { navController.popBackStack() },
+                        onSaveClick = {saveData(state)}
                     )
                 }
             }
         }
+
     }
+    private fun saveData(state: MushroomState){
+        val fontSize = state.fontSize
+        val sharedPreferences = getSharedPreferences("key", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("fontSize", fontSize)
+        editor.apply()
+        Toast.makeText(this, "Nastavení bylo uloženo", Toast.LENGTH_SHORT).show()
+    }
+    private fun loadData(){
+        val sharedPreferences = getSharedPreferences("key", Context.MODE_PRIVATE)
+        val fontSize = sharedPreferences.getFloat("fontSize", 16f)
+        viewModel.onEvent(MushroomEvent.ChangeFontSize(fontSize))
+    }
+
 }
 
