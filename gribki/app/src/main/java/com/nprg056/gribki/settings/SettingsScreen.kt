@@ -1,4 +1,4 @@
-package com.nprg056.gribki
+package com.nprg056.gribki.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,9 +23,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ScreenSetting(
-    onEvent: (MushroomEvent)->Unit,
-    state: MushroomState,
-    fontSize: Float,
+    onEvent: (SettingsEvent)->Unit,
+    state: SettingsState,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     onQuitClick: () -> Unit
@@ -109,8 +108,8 @@ fun ScreenSetting(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Ukázkový text - ${fontSize.toInt()} sp",
-                        fontSize = fontSize.sp,
+                        text = "Ukázkový text - ${state.fontSize.toInt()} sp",
+                        fontSize = state.fontSize.sp,
                         color = Color.DarkGray
                     )
                 }
@@ -135,9 +134,9 @@ fun ScreenSetting(
                         color = Color.Gray
                     )
                     Slider(
-                        value = fontSize,
+                        value = state.fontSize,
                         onValueChange = { newSize ->
-                            onEvent(MushroomEvent.ChangeFontSize(newSize))
+                            onEvent(SettingsEvent.ChangeFontSize(newSize))
                         },
                         valueRange = 12f..30f,
                         steps = 6,

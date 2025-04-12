@@ -1,4 +1,4 @@
-package com.nprg056.gribki
+package com.nprg056.gribki.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

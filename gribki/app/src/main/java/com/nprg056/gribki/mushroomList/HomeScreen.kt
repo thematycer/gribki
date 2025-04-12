@@ -1,4 +1,4 @@
-package com.nprg056.gribki
+package com.nprg056.gribki.mushroomList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,13 +31,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.nprg056.gribki.R
-
+import com.nprg056.gribki.database.UsageType
 
 
 @Composable
 fun MushroomScreen(
-    state: MushroomState,
-    onEvent: (MushroomEvent) -> Unit,
+    state: MushroomListState,
+    fontSize: Float,
+    onEvent: (MushroomListEvent) -> Unit,
     onMushroomClick: (Int) -> Unit,
     screenSettingClick: () -> Unit
 ){
@@ -64,7 +65,7 @@ fun MushroomScreen(
                         Text(
                             text = "Atlas Hub",
                             color = Color.Black,
-                            fontSize = (state.fontSize * 2).sp,
+                            fontSize = (fontSize * 2).sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.weight(1f).padding(vertical = 15.dp)
                         )
@@ -94,9 +95,9 @@ fun MushroomScreen(
                 OutlinedTextField(
                     value = state.searchedName,
                     onValueChange = { newValue ->
-                        onEvent(MushroomEvent.SearchMushroomName(newValue))
+                        onEvent(MushroomListEvent.Search(newValue))
                     },
-                    label = { Text("Název houby:", fontSize = (state.fontSize).sp) },
+                    label = { Text("Název houby:", fontSize = (fontSize).sp) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -119,7 +120,7 @@ fun MushroomScreen(
                         Row(
                             modifier = Modifier
                                 .clickable {
-                                    onEvent(MushroomEvent.SortMushroom(usageType))
+                                    onEvent(MushroomListEvent.SortMushroom(usageType))
                                 }
                                  .padding(horizontal = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -127,7 +128,7 @@ fun MushroomScreen(
                             RadioButton(
                                 selected = state.usage == usageType,
                                 onClick = {
-                                    onEvent(MushroomEvent.SortMushroom(usageType))
+                                    onEvent(MushroomListEvent.SortMushroom(usageType))
                                 },
                                 colors = RadioButtonDefaults.colors(
                                     unselectedColor = Color.Gray,
@@ -138,7 +139,7 @@ fun MushroomScreen(
                             Text(
                                 text = czechLabels[usageType.name] ?: usageType.name,
                                 color = Color.DarkGray,
-                                fontSize = (state.fontSize*0.8).sp,
+                                fontSize = (fontSize*0.8).sp,
                                 fontWeight = FontWeight.Bold
                             )
                         }
@@ -180,7 +181,7 @@ fun MushroomScreen(
                             Text(
                                 text = mushroom.name,
                                 color = Color.DarkGray,
-                                fontSize = (state.fontSize).sp,
+                                fontSize = (fontSize).sp,
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = FontFamily.Serif,
                                 maxLines = 2,
@@ -191,7 +192,7 @@ fun MushroomScreen(
                         Text(
                             text = "›",
                             color = Color.Gray,
-                            fontSize = (state.fontSize * 1.5).sp,
+                            fontSize = (fontSize * 1.5).sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .weight(0.15f)

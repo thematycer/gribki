@@ -16,6 +16,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.nprg056.gribki.database.MushroomDatabase
+import com.nprg056.gribki.detail.MushroomDetailEvent
+import com.nprg056.gribki.detail.MushroomDetailScreen
+import com.nprg056.gribki.detail.MushroomDetailViewModel
+import com.nprg056.gribki.mushroomList.MushroomListViewModel
+import com.nprg056.gribki.mushroomList.MushroomScreen
+import com.nprg056.gribki.settings.ScreenSetting
+import com.nprg056.gribki.settings.SettingsEvent
+import com.nprg056.gribki.settings.SettingsViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -31,10 +40,26 @@ class MainActivity : ComponentActivity() {
         MushroomRepository(db.MushroomDao(), applicationContext)
     }
 
-    private val viewModel: MushroomViewModel by viewModels {
+    private val listViewModel: MushroomListViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MushroomViewModel(repository) as T
+                return MushroomListViewModel(repository) as T
+            }
+        }
+    }
+
+    private val detailViewModel: MushroomDetailViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return MushroomDetailViewModel(repository) as T
+            }
+        }
+    }
+
+    private val settingsViewModel: SettingsViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return SettingsViewModel(repository) as T
             }
         }
     }
@@ -45,13 +70,16 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            val state by viewModel.state.collectAsState()
+            val listState by listViewModel.state.collectAsState()
+            val settingsState by settingsViewModel.state.collectAsState()
+            val detailState by detailViewModel.state.collectAsState()
 
             NavHost(navController = navController, startDestination = "mushroom_list") {
                 composable("mushroom_list") {
                     MushroomScreen(
-                        state = state,
-                        onEvent = viewModel::onEvent,
+                        state = listState,
+                        fontSize = settingsState.fontSize,
+                        onEvent = listViewModel::onEvent,
                         onMushroomClick = { id -> navController.navigate("mushroom_detail/$id") },
                         screenSettingClick = { navController.navigate("settings") }
                     )
@@ -61,22 +89,21 @@ class MainActivity : ComponentActivity() {
                     arguments = listOf(navArgument("id") { type = NavType.IntType })
                 ) { backStackEntry ->
                     val mushroomId = backStackEntry.arguments?.getInt("id") ?: 0
-                    val mushroom = state.mushrooms.find { it.id == mushroomId }
+                    detailViewModel.onEvent(MushroomDetailEvent.LoadMushroom(mushroomId))
 
                     MushroomDetailScreen(
-                        mushroom = mushroom,
-                        state = state,
+                        mushroom = detailState.selectedMushroom,
+                        fontSize = settingsState.fontSize,
                         onBackClick = { navController.navigate("mushroom_list") }
                     )
                 }
                 composable("settings") {
                     ScreenSetting(
-                        fontSize = state.fontSize,
-                        onEvent = viewModel::onEvent,
-                        state = state,
+                        onEvent = settingsViewModel::onEvent,
+                        state = settingsState,
                         onBackClick = { navController.navigate("mushroom_list") },
                         onSaveClick = {
-                            viewModel.saveFontSettings()
+                            settingsViewModel.onEvent(SettingsEvent.SaveSettings)
                             Toast.makeText(this@MainActivity, "Nastavení bylo uloženo", Toast.LENGTH_SHORT).show()
                         },
                         onQuitClick = { finishAffinity() }

@@ -6,6 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import androidx.core.content.edit
+import com.nprg056.gribki.database.Mushroom
+import com.nprg056.gribki.database.MushroomDao
+import com.nprg056.gribki.database.UsageType
 
 class MushroomRepository(
     private val dao: MushroomDao,
@@ -17,6 +20,10 @@ class MushroomRepository(
 
     fun getMushroomByNameAndUsage(name: String, usageType: UsageType): Flow<List<Mushroom>> {
         return dao.getMushroomByNameAndUsage(name, usageType)
+    }
+
+    fun getMushroomById(id: Int): Flow<Mushroom> {
+        return dao.getMushroomById(id)
     }
 
     suspend fun populateDatabase() {
@@ -98,12 +105,17 @@ class MushroomRepository(
     }
 
     fun loadFontSize(): Float {
-        val sharedPreferences = context.getSharedPreferences("key", Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
         return sharedPreferences.getFloat("fontSize", 16f)
     }
 
     fun saveFontSize(fontSize: Float) {
-        val sharedPreferences = context.getSharedPreferences("key", Context.MODE_PRIVATE)
-        sharedPreferences.edit { putFloat("fontSize", fontSize) }
+        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        sharedPreferences.edit().apply {
+            putFloat("fontSize", fontSize)
+            apply()
+        }
     }
+
+
 }

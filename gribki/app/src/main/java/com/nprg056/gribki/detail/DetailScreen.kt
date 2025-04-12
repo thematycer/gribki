@@ -1,4 +1,4 @@
-package com.nprg056.gribki
+package com.nprg056.gribki.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,12 +25,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nprg056.gribki.database.Mushroom
+import com.nprg056.gribki.R
+import com.nprg056.gribki.database.UsageType
 
 @Composable
 fun MushroomDetailScreen(
     mushroom: Mushroom?,
     onBackClick: () -> Unit,
-    state: MushroomState,
+    fontSize: Float
 ) {
     Box(
         modifier = Modifier
@@ -59,13 +62,13 @@ fun MushroomDetailScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "←",
-                            fontSize = (state.fontSize * 1.2).sp,
+                            fontSize = (fontSize * 1.2).sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.DarkGray
                         )
                         Text(
                             text = " Zpět",
-                            fontSize = (state.fontSize).sp,
+                            fontSize = (fontSize).sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.DarkGray
                         )
@@ -101,7 +104,7 @@ fun MushroomDetailScreen(
                             Text(
                                 text = it.name,
                                 color = Color.DarkGray,
-                                fontSize = (state.fontSize * 1.5).sp,
+                                fontSize = (fontSize * 1.5).sp,
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = FontFamily.Serif,
                                 modifier = Modifier.padding(bottom = 16.dp)
@@ -120,7 +123,7 @@ fun MushroomDetailScreen(
                                     Text(
                                         text = statusText,
                                         color = statusColor,
-                                        fontSize = (state.fontSize).sp,
+                                        fontSize = (fontSize).sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
@@ -156,14 +159,14 @@ fun MushroomDetailScreen(
                                         Text(
                                             text = label,
                                             color = statusColor,
-                                            fontSize = (state.fontSize * 0.9).sp,
+                                            fontSize = (fontSize * 0.9).sp,
                                             fontWeight = FontWeight.Bold,
                                             fontFamily = FontFamily.Serif
                                         )
                                         Text(
                                             text = content,
                                             color = Color.DarkGray,
-                                            fontSize = (state.fontSize).sp,
+                                            fontSize = (fontSize).sp,
                                             fontFamily = FontFamily.Serif,
                                             modifier = Modifier.padding(top = 4.dp)
                                         )
@@ -189,7 +192,7 @@ fun MushroomDetailScreen(
                     Text(
                         text = "Houba nebyla nalezena!",
                         color = Color.Red,
-                        fontSize = (state.fontSize).sp,
+                        fontSize = (fontSize).sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Serif
                     )

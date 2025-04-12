@@ -1,7 +1,6 @@
-package com.nprg056.gribki
+package com.nprg056.gribki.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +21,8 @@ interface MushroomDao {
     @Query("SELECT * FROM mushroom WHERE name LIKE '%'||:name || '%' AND usage = :usageType ORDER BY name ASC")
     fun getMushroomByNameAndUsage(name: String, usageType: UsageType): Flow<List<Mushroom>>
 
+    @Query("SELECT * FROM mushroom WHERE id = :id")
+    fun getMushroomById(id: Int): Flow<Mushroom>
 
     //can add to select by name if needed
     //@Query("SELECT * FROM mushroom WHERE id = :id")
