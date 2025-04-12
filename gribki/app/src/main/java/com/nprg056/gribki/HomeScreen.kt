@@ -30,6 +30,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.nprg056.gribki.R
+
 
 
 @Composable
@@ -76,10 +78,12 @@ fun MushroomScreen(
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "⚙️",
-                                fontSize = (state.fontSize).sp
+
+                            Image(
+                                painter = painterResource(id = R.drawable.icon_settings),
+                                contentDescription = "setting button",
                             )
+
                         }
                     }
                 }

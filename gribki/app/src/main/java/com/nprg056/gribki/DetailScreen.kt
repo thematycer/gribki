@@ -182,10 +182,9 @@ fun MushroomDetailScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "⚠️",
-                        fontSize = (state.fontSize * 2).sp,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_alert_triangle),
+                        contentDescription = "Icon with alert triangle",
                     )
                     Text(
                         text = "Houba nebyla nalezena!",
