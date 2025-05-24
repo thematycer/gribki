@@ -28,7 +28,7 @@ class MushroomRepository(
 
     suspend fun populateDatabase() {
         withContext(Dispatchers.IO) {
-            context.deleteDatabase("mushroom_database.db")
+            //context.deleteDatabase("mushroom_database.db")
             val existingMushrooms = dao.searchMushroomsByName("").first()
             if (existingMushrooms.isEmpty()) {
                 val mushrooms = listOf(
