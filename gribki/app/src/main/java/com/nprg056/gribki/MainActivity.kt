@@ -21,6 +21,9 @@ import com.nprg056.gribki.database.MushroomDatabase
 import com.nprg056.gribki.detail.MushroomDetailEvent
 import com.nprg056.gribki.detail.MushroomDetailScreen
 import com.nprg056.gribki.detail.MushroomDetailViewModel
+import com.nprg056.gribki.factory.MushroomDetailViewModelFactory
+import com.nprg056.gribki.factory.MushroomListViewModelFactory
+import com.nprg056.gribki.factory.SettingsViewModelFactory
 import com.nprg056.gribki.mushroomList.MushroomListViewModel
 import com.nprg056.gribki.mushroomList.MushroomScreen
 import com.nprg056.gribki.settings.ScreenSetting
@@ -40,27 +43,15 @@ class MainActivity : ComponentActivity() {
     }
 
     private val listViewModel: MushroomListViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MushroomListViewModel(repository) as T
-            }
-        }
+        MushroomListViewModelFactory(repository)
     }
 
     private val detailViewModel: MushroomDetailViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MushroomDetailViewModel(repository) as T
-            }
-        }
+        MushroomDetailViewModelFactory(repository)
     }
 
     private val settingsViewModel: SettingsViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return SettingsViewModel(repository) as T
-            }
-        }
+        SettingsViewModelFactory(repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
