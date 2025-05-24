@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavType
@@ -25,16 +26,14 @@ import com.nprg056.gribki.mushroomList.MushroomScreen
 import com.nprg056.gribki.settings.ScreenSetting
 import com.nprg056.gribki.settings.SettingsEvent
 import com.nprg056.gribki.settings.SettingsViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
     private val db by lazy {
-        Room.databaseBuilder(
-            applicationContext,
-            MushroomDatabase::class.java,
-            "mushroom_database.db"
-        ).build()
+        MushroomDatabase.getInstance(applicationContext)
     }
+
 
     private val repository by lazy {
         MushroomRepository(db.MushroomDao(), applicationContext)
@@ -68,6 +67,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        lifecycleScope.launch {
+            repository.populateDatabase()
+        }
         setContent {
             val navController = rememberNavController()
             val listState by listViewModel.state.collectAsState()
