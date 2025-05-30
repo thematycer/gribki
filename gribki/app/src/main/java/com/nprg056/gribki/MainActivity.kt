@@ -99,13 +99,14 @@ class MainActivity : ComponentActivity() {
                     )
                     val settingsState by settingsViewModel.state.collectAsState()
                     ScreenSetting(
-                        onEvent = settingsViewModel::onEvent,
+                        onEvent = {
+                            settingsViewModel.onEvent(it)
+                            if (it is SettingsEvent.SaveSettings) {
+                                Toast.makeText(this@MainActivity, "Nastavení bylo uloženo", Toast.LENGTH_SHORT).show()
+                            }
+                        },
                         state = settingsState,
                         onBackClick = { navController.navigate("mushroom_list") },
-                        onSaveClick = {
-                            settingsViewModel.onEvent(SettingsEvent.SaveSettings)
-                            Toast.makeText(this@MainActivity, "Nastavení bylo uloženo", Toast.LENGTH_SHORT).show()
-                        },
                         onQuitClick = { finishAffinity() }
                     )
                 }

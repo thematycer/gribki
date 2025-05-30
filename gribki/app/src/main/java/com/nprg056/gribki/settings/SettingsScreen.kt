@@ -26,7 +26,7 @@ fun ScreenSetting(
     onEvent: (SettingsEvent)->Unit,
     state: SettingsState,
     onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
+    //onSaveClick: () -> Unit,
     onQuitClick: () -> Unit
 ) {
     Column(
@@ -158,7 +158,7 @@ fun ScreenSetting(
                 .fillMaxWidth()
                 .padding(top = 24.dp)
                 .background(Color(0xFF4CAF50), RoundedCornerShape(8.dp))
-                .clickable { onSaveClick() },
+                .clickable { onEvent(SettingsEvent.SaveSettings) },
             contentAlignment = Alignment.Center
         ) {
             Text(
