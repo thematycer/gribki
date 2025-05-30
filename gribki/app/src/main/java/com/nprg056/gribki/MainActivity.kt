@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
                     )
                     val settingsState by settingsViewModel.state.collectAsState()
                     val mushroomId = backStackEntry.arguments?.getInt("id") ?: 0
-                    detailViewModel.onEvent(MushroomDetailEvent.LoadMushroom(mushroomId))
+                    //detailViewModel.onEvent(MushroomDetailEvent.LoadMushroom(mushroomId))
 
                     MushroomDetailScreen(
                         mushroomId = mushroomId,
