@@ -106,8 +106,10 @@ class MainActivity : ComponentActivity() {
                     detailViewModel.onEvent(MushroomDetailEvent.LoadMushroom(mushroomId))
 
                     MushroomDetailScreen(
+                        mushroomId = mushroomId,
                         mushroom = detailState.selectedMushroom,
                         fontSize = settingsState.fontSize,
+                        onEvent = detailViewModel::onEvent,
                         onBackClick = { navController.navigate("mushroom_list") }
                     )
                 }

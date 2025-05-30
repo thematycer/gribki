@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,10 +32,18 @@ import com.nprg056.gribki.database.UsageType
 
 @Composable
 fun MushroomDetailScreen(
+    mushroomId: Int,
     mushroom: Mushroom?,
+    onEvent: (MushroomDetailEvent) -> Unit,
     onBackClick: () -> Unit,
     fontSize: Float
 ) {
+    LaunchedEffect(key1 = mushroomId) {
+        if (mushroomId != 0) {
+            onEvent(MushroomDetailEvent.LoadMushroom(mushroomId))
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
